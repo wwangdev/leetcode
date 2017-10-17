@@ -1,0 +1,51 @@
+Reverse digits of an integer.
+
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+
+click to show spoilers.
+
+Note:
+The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+
+Code:
+
+class Solution {
+public:
+    int reverse(int x) {
+        int sign = x >= 0 ? 1 : -1;
+        x *= sign;
+        // incase of overflow
+        long result = 0;
+        while (x)
+        {
+            result *= 10;
+            result += x % 10;
+            x /= 10;
+        }
+        result *= sign;
+        if (result > ((1 << 31)-1) || result < -(1 << 31))
+            return 0;
+        return result;
+    }
+};
+
+Improved Code:
+
+class Solution {
+public:
+    int reverse(int x) {
+        long long result = 0;
+        while (x)
+        {
+            result = result * 10 + x % 10;
+            x /= 10;
+        }
+        return (result > INT_MAX || result < INT_MIN) ? 0 : result;
+    }
+};
+
+
+Note:
+1. should define result as long long incase of overflow -- long could be 32-bit(machine-specific).
+2. use INT_MAX instead of hard coding.
