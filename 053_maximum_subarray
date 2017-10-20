@@ -5,6 +5,8 @@ For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6. 
 click to show more practice.
 
+Code:
+#1 Dynamic programming
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
@@ -30,6 +32,25 @@ public:
                 prev += nums[i];
                 result = max(prev, result);
             }
+        }
+        return result;
+    }
+};
+
+#2 Drop when < 0
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if (nums.empty())
+            return 0;
+        // drop the result < 0
+        int result = nums[0];
+        int sum = 0;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            sum += nums[i];
+            result = max(result, sum);
+            sum = max(sum, 0);
         }
         return result;
     }
