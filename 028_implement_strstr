@@ -1,0 +1,35 @@
+Implement strStr()
+
+Implement strStr(). 
+Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack. 
+
+Code:
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = needle.size();
+        int m = haystack.size();
+        if (!n)
+            return 0;
+        for (int i = 0; i < m-n+1; ++i)
+        {
+            // for each position, verify the string
+            int j = 0;
+            for (; j < n; ++j)
+            {
+                if (needle[j] != haystack[i+j])
+                    break;
+            }
+            // find first occurrence
+            if (j == n)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+Node: Made a mistake when using haystack.size()-needle.size()+1 in the loop instead of m-n+1!!
+string.size() returns an uint!!!
