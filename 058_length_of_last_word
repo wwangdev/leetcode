@@ -1,0 +1,32 @@
+Length of Last Word
+
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+If the last word does not exist, return 0.
+Note: A word is defined as a character sequence consists of non-space characters only.
+For example, 
+Given s = "Hello World",
+return 5. 
+
+Code:
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int lastLen = 0;
+        int curLen = 0;
+        for (int i = 0; i < s.size(); ++i)
+        {
+            if (s[i] == ' ')
+            {
+                if (curLen)
+                {
+                    lastLen = curLen;
+                    curLen = 0;
+                }
+            }
+            else
+                ++curLen;
+        }
+        return curLen ? curLen : lastLen;
+    }
+};
