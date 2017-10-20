@@ -1,0 +1,90 @@
+Merge Two Sorted Lists
+
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+Code:
+#1. No dummy node.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == NULL)
+            return l2;
+        if (l2 == NULL)
+            return l1;
+        int curVal = l1->val;
+        if (l1->val > l2->val)
+        {
+            curVal = l2->val;
+            l2 = l2->next;
+        }
+        else
+            l1 = l1->next;
+        ListNode* head = new ListNode(curVal);
+        ListNode* curNode = head;
+        while (l1 && l2)
+        {
+            if (l1->val < l2->val)
+            {
+                curVal = l1->val;
+                l1 = l1->next;
+            }
+            else
+            {
+                curVal = l2->val;
+                l2 = l2->next;
+            }
+            curNode->next = new ListNode(curVal);
+            curNode = curNode->next;
+        }
+        if (l1)
+            curNode->next = l1;
+        else
+            curNode->next = l2;
+        return head;
+    }
+};
+
+#2. Dummy Node:
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        // add a dummy node to make logic simple
+        ListNode* dummy = new ListNode(0);
+        ListNode* curNode = dummy;
+        while (l1 && l2)
+        {
+            int curVal = 0;
+            if (l1->val < l2->val)
+            {
+                curVal = l1->val;
+                l1 = l1->next;
+            }
+            else
+            {
+                curVal = l2->val;
+                l2 = l2->next;
+            }
+            curNode->next = new ListNode(curVal);
+            curNode = curNode->next;
+        }
+        curNode->next = l1 ? l1 : l2;
+        return dummy->next;
+    }
+};
