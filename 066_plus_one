@@ -1,0 +1,42 @@
+Plus One
+
+Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
+You may assume the integer do not contain any leading zero, except the number 0 itself.
+The digits are stored such that the most significant digit is at the head of the list.
+
+Code:
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int i = 0;
+        vector<int> result;
+        for (i = digits.size()-1; i >= 0; --i)
+        {
+            if (digits[i] != 9)
+            {
+                break;
+            }
+        }
+        if (i < 0)
+        {
+            result.push_back(1);
+            // case 1000...
+            for (i = 0; i < digits.size(); ++i)
+                result.push_back(0);
+        }
+        else
+        {
+            int j = 0;
+            while (j < i)
+                result.push_back(digits[j++]);
+            result.push_back(digits[j++]+1);
+            while (j < digits.size())
+            {
+                result.push_back(0);
+                ++j;
+            }
+        }
+        return result;
+    }
+};
