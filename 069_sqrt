@@ -1,0 +1,45 @@
+Sqrt(x)
+
+Implement int sqrt(int x).
+Compute and return the square root of x.
+
+Code:
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        // binary search
+        int l = 0;
+        int r = x;
+        long long m = 0;
+        int ans = 0;
+        while (l <= r)
+        {
+            m = (l + r) >> 1;
+            if (m * m  == x)
+                return m;
+            else if (m * m > x)
+                r = m - 1;
+            else
+            {
+                l = m + 1;
+                ans = m;
+            }
+        }
+        return ans;        
+    }
+};
+
+Newton's Method:
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        long long r = x;
+        while (r * r > x)
+        {
+            r = (r + x/r) / 2;
+        }
+        return r;
+    }
+};
