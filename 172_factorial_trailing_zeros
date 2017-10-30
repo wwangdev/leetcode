@@ -1,0 +1,20 @@
+Factorial Trailing Zeros
+
+Given an integer n, return the number of trailing zeroes in n!.
+Note: Your solution should be in logarithmic time complexity.
+
+Code:
+
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int res = 0;
+        long long mul = 5;
+        while (n / mul)
+        {
+            res += n/mul;
+            mul *= 5;
+        }
+        return res;
+    }
+};
