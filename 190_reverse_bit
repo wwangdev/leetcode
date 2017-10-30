@@ -1,0 +1,56 @@
+Reverse Bit
+
+Reverse bits of a given 32 bits unsigned integer.
+For example, given input 43261596 (represented in binary as 00000010100101000001111010011100), return 964176192 (represented in binary as 00111001011110000010100101000000).
+Follow up:
+If this function is called many times, how would you optimize it? 
+
+Code:
+
+#1. Use bitset STL
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        bitset<32> b(n);
+        bitset<1> t;
+        for (int i = 0; i < 16; ++i)
+        {
+            t[0] = b[i];
+            b[i] = b[31-i];
+            b[31-i] = t[0];
+        }
+        return b.to_ulong();
+    }
+};
+
+#2. Use bit operation
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t res = 0;
+        for (int i = 0; i < 32; ++i)
+        {
+            res = (res << 1) | (n & 1);
+            n >>= 1;
+        }
+        return res;
+    }
+};
+
+#3. Follow Up: Use lookup table (say 4-bit LUT -- need 16 bytes space, can expand to 8-bit, 16-bit, 32-bit by need)
+
+class Solution {
+    int lut[16] = {0,8,4,12,2,10,6,14,1,9,5,13,3,11,7,15};
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t res = 0;
+        for (int i = 0; i < 8; ++i)
+        {
+            res = (res << 4) | lut[n & 0xf];
+            n >>= 4;
+        }
+        return res;
+    }
+};
