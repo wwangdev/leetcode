@@ -1,0 +1,63 @@
+Number of 1 Bits
+
+Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
+For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.
+
+Code:
+
+#1. bitset
+
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        bitset<32> b(n);
+        return b.count();
+    }
+};
+
+#2. bit operation
+
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int counter = 0;
+        while (n)
+        {
+            counter += (n&1);
+            n >>= 1;
+        }
+        return counter;
+    }
+};
+
+#3. O(m) time bit operation: n & n-1 -> remove one 1.
+
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int counter = 0;
+        while (n)
+        {
+            n &= n-1;
+            ++counter;
+        }
+        return counter;
+    }
+};
+
+#4. O(1) time bit operation
+
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        // O(1) time bit operation
+        // https://en.wikipedia.org/wiki/Hamming_weight
+        // calculate number of 1s by 2-bit, 4-bit, ...
+        n = (n & 0x55555555) + (n >> 1 & 0x55555555); //01010101
+        n = (n & 0x33333333) + (n >> 2 & 0x33333333); //00110011
+        n = (n & 0x0f0f0f0f) + (n >> 4 & 0x0f0f0f0f); //00001111
+        n = (n & 0x00ff00ff) + (n >> 8 & 0x00ff00ff); //...
+        n = (n & 0x0000ffff) + (n >> 16 & 0x0000ffff);
+        return n;
+    }
+};
