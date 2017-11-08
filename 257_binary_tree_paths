@@ -1,0 +1,64 @@
+Binary Tree Paths
+
+Given a binary tree, return all root-to-leaf paths. 
+For example, given the following binary tree: 
+
+   1
+ /   \
+2     3
+ \
+  5
+
+All root-to-leaf paths are: 
+["1->2->5", "1->3"]
+
+Code:
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    vector<int> res;
+    vector<string> resStr;
+    void helper(TreeNode* root)
+    {
+        // root should not be NULL!
+        res.push_back(root->val);
+        if (!root->left && !root->right)
+        {
+            // add the res to str
+            string str = "";
+            for (int i = 0; i < res.size() - 1; ++i)
+            {
+                str += to_string(res[i]);
+                str += "->";
+            }
+            str += to_string(res.back());
+            resStr.push_back(str);
+            return;
+        }
+        if (root->left)
+        {
+            helper(root->left);
+            res.pop_back();
+        }
+        if (root->right)
+        {
+            helper(root->right);
+            res.pop_back();
+        }
+    }
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        if (!root)
+            return resStr;
+        helper(root);
+        return resStr;
+    }
+};
