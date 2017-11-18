@@ -1,0 +1,102 @@
+Sum of Two Integers 
+
+Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
+Example:
+Given a = 1 and b = 2, return 3. 
+
+Code:
+
+#1. Brute-force:
+
+class Solution {
+public:
+	int getSum(int a, int b) {
+		unsigned int bm = 1;
+		bool carry = 0;
+		for (int i = 0; i < 32; ++i)
+		{
+			if (carry)
+			{
+				if (a&bm)
+				{
+					if (b&bm)
+					{
+						a |= bm;
+						carry = 1;
+					}
+					else
+					{
+						a &= ~bm;
+
+carry = 1;
+					}
+				}
+				else
+				{
+					if (b&bm)
+					{
+						a &= ~bm;
+						carry = 1;
+					}
+					else
+					{
+						a |= bm;
+						carry = 0;
+					}
+				}
+			}
+			else
+			{
+				if (a&bm)
+				{
+					if (b&bm)
+					{
+						a &= ~bm;
+						carry = 1;
+					}
+					else
+					{
+						a |= bm;
+						carry = 0;
+					}
+				}
+				else
+				{
+					if (b&bm)
+					{
+						a |= bm;
+						carry = 0;
+					}
+					else
+					{
+						a &= ~bm;
+						carry = 0;
+					}
+				}
+			}
+			bm <<= 1;
+		}            
+		return a;
+	}
+};
+
+#2. Bitwise elegant:
+
+class Solution {
+public:
+	int getSum(int a, int b) {
+        // a + b = a^b + (a&b)<<1
+		int c = a;
+        while (b)
+        {
+            c = a ^ b;
+            b = (a & b) << 1;
+            a = c;
+        }
+        return a;
+	}
+};
+
+
+
+
