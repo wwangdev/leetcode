@@ -54,3 +54,34 @@ public:
         return res;
     }
 };
+
+Note: use num == 0 in loop to reduce a "head 0" check and reduce the loop (worst 8).
+Improved code:
+
+class Solution {
+    vector<char> lut;
+    void initLut()
+    {
+        for (int i = 0; i <= 9; ++i)
+            lut.push_back(i + '0');
+        for (char c = 'a'; c <= 'f'; ++c)
+            lut.push_back(c);
+    }
+public:
+    string toHex(int num) {
+        if (!num)
+            return "0";
+        initLut();
+        int mask = 0x0f;
+        string res = "";
+        int idx = 0;
+        while (num && idx++ < 8)
+        {
+            int temp = num & mask;
+            res += lut[temp];
+            num >>= 4;
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
