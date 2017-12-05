@@ -1,0 +1,52 @@
+Add Strings 
+
+Given two non-negative integers num1 and num2 represented as string, return the sum of num1 and num2.
+Note: 
+The length of both num1 and num2 is < 5100.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly
+
+Code:
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        // make sure num1.size() >= num2.size()
+        if (num1.size() < num2.size())
+        {
+            string tmp = num1;
+            num1 = num2;
+            num2 = tmp;
+        }
+        int carrier = 0;
+        int idx1 = num1.size() - 1;
+        int idx2 = num2.size() - 1; // idx2 <= idx1
+        int tmp = 0;
+        
+        string res = "";
+        while (idx1 >= 0 && idx2 >= 0)
+        {
+            tmp = (num1[idx1] - '0') + (num2[idx2] - '0') + carrier;
+            carrier = tmp / 10;
+            tmp %= 10;
+            res += to_string(tmp);
+            --idx1;
+            --idx2;
+        }
+        while (idx1 >= 0)
+        {
+            tmp = (num1[idx1] - '0') + carrier;
+            carrier = tmp / 10;
+            tmp %= 10;
+            res += to_string(tmp);
+            --idx1;
+        }
+        if (carrier)
+            res += "1";
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+Note: originally mistaken by idx-- in while loop!!!!
