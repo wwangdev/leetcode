@@ -1,0 +1,56 @@
+You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells). The island doesn't have "lakes" (water inside that isn't connected to the water around the island). One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
+Example: 
+[[0,1,0,0],
+ [1,1,1,0],
+ [0,1,0,0],
+ [1,1,0,0]]
+
+Answer: 16
+Explanation: The perimeter is the 16 yellow stripes in the image below:
+
+Solution:
+
+class Solution {
+    int calChange(vector<int>& vec)
+    {
+        // this vec has a beginning/endding pad 0
+        int result = 0;
+        int current = 0;
+        for (int i = 0; i < vec.size(); ++i)
+        {
+            if (vec[i] != current)
+            {
+                ++result;
+                current =vec[i];
+            }
+        }
+        return result;
+    }
+public:
+    int islandPerimeter(vector<vector<int>>& grid) {
+        // by observation, if we go over each row and check the change from (0->1->0) * 2 will be the vertical perimeter
+        // same for each column for horizontal perimeter
+        int numRow = grid.size();
+        int numCol = grid[0].size();
+        int result = 0;
+        for (int i = 0; i < numRow; ++i)
+        {
+            vector<int> vec;
+            vec.push_back(0);
+            for (int j = 0; j < numCol; ++j)
+                vec.push_back(grid[i][j]);
+            vec.push_back(0);
+            result += calChange(vec);
+        }
+        for (int i = 0; i < numCol; ++i)
+        {
+            vector<int> vec;
+            vec.push_back(0);
+            for (int j = 0; j < numRow; ++j)
+                vec.push_back(grid[j][i]);
+            vec.push_back(0);
+            result += calChange(vec);
+        }
+        return result;
+    }
+};
