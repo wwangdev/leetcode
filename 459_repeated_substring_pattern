@@ -52,3 +52,6 @@ public:
         return false;
     }
 };
+
+Better solution:
+"ababab" == "ababab".substr(2) + "ababab".substr(0,2)
