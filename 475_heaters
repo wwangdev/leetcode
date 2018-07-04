@@ -59,3 +59,6 @@ public:
 		return result;
 	}
 };
+
+To avoid too many corner cases considered,
+use (abs(heaters[idx+1]- houses[i]) < = abs(heaters[idx] - houses[i]) to decide whether we should stop increase the index
