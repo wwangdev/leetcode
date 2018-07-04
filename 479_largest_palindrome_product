@@ -44,3 +44,33 @@ public:
 		return res;
 	}
 };
+
+Better solution: Build the palindrome first instead of check palindrome
+
+class Solution {
+	long long buildPalindrome(int n)
+    {
+        string s = to_string(n);
+        string t = s;
+        reverse(s.begin(), s.end());
+        return stol(t + s);
+    }
+public:
+	int largestPalindrome(int n) {
+		if (n == 1)
+            return 9;
+        int upper = pow(10, n);
+        int lower = upper / 10;
+        upper -= 1;
+        for (int i = upper; i >= lower; --i)
+        {
+            long long num = buildPalindrome(i);
+            for (long long j = upper; j * j >= num; --j)
+            {
+                if (num % j == 0)
+                    return num % 1337;
+            }
+        }
+        return 0;
+	}
+};
